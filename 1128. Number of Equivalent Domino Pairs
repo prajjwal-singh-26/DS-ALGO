@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
+        for(auto &d : dominoes){
+            if(d[0] > d[1]){
+                swap(d[0],d[1]);
+            }
+        }
+
+        sort(begin(dominoes),end(dominoes),[](const vector<int> &d1, const vector<int> &d2){
+            return d1[0] < d2[0] || (d1[0] == d2[0] && d1[1] < d2[1]);
+        });
+
+        int count = 0;
+
+        for(int s = 0,  i = 0; i <= dominoes.size(); ++i){
+            if(i == dominoes.size() || (dominoes[i][0] != dominoes[s][0] || dominoes[i][1] != dominoes[s][1])){
+                count += ((i - s)*(i - s - 1))/2;
+                s = i;
+            }
+        }
+
+        return count;
+    }
+};
