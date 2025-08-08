@@ -1,0 +1,33 @@
+class Solution {
+    public int myAtoi(String s) {
+        int i=0;
+        char[] arr=s.toCharArray();
+        while(i<arr.length && arr[i]==' '){
+            i++;
+        }
+
+        int sign=1;
+        if (i<arr.length && (arr[i]=='+' || arr[i]=='-')){
+            if(arr[i]=='-'){
+                sign*=-1;
+            }
+            i++;
+        }
+
+        long ans=0;
+
+        while (i<arr.length && Character.isDigit(arr[i])){
+            ans=10*ans + (arr[i]-'0');
+
+            if(ans*sign>Integer.MAX_VALUE){
+                return Integer.MAX_VALUE;
+            }
+
+            if(ans*sign<Integer.MIN_VALUE){
+                return Integer.MIN_VALUE;
+            }
+            i++;
+        }
+        return  (int)ans*sign;
+    }
+}
