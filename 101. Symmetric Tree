@@ -1,0 +1,19 @@
+class Solution {
+    public:
+    bool isSymmetric(TreeNode* root) {
+        return  root==NULL || checkit(root->left,root->right);
+    }
+    private:
+    bool checkit(TreeNode* left, TreeNode* right)
+    {
+        if(left==nullptr && right==nullptr)
+        {
+            return true;
+        }
+           if(left==nullptr || right==nullptr)
+        {
+            return false;
+        }
+        return right->val == left->val && checkit(right->right , left->left) && checkit(right->left,left->right);
+    }
+};
