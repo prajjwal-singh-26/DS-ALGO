@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int binarySearch(vector<int>& heaters, int house) {
+        int low = 0, high = heaters.size() - 1;
+        int ans = heaters.size(); 
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (heaters[mid] >= house) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans; 
+    }
+
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+
+        int radius = 0;
+
+        for (int i = 0; i < houses.size(); i++) {
+            int house = houses[i];
+
+            int idx = binarySearch(heaters, house);
+
+            int leftDist = INT_MAX, rightDist = INT_MAX;
+
+            if (idx > 0) {
+                leftDist = house - heaters[idx - 1];
+            }
+
+            if (idx < heaters.size()) {
+                rightDist = heaters[idx] - house;
+            }
+
+            int closest = min(leftDist, rightDist);
+            radius = max(radius, closest);
+        }
+
+        return radius;
+    }
+};
