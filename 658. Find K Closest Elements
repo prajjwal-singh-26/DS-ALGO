@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int n = arr.size();
+    
+        int idx = lower_bound(arr.begin(), arr.end(), x) - arr.begin();
+        
+
+        int left = idx - 1;
+        int right = idx;
+        
+        vector<int> ans;
+
+        while (ans.size() < k) {
+            bool canPickLeft = (left >= 0);
+            bool canPickRight = (right < n);
+            
+            if (!canPickLeft) {
+                ans.push_back(arr[right]);
+                right++;
+            }
+            else if (!canPickRight) {
+                ans.push_back(arr[left]);
+                left--;
+            }
+            else {
+                int leftDiff = abs(x - arr[left]);
+                int rightDiff = abs(x - arr[right]);
+                
+                if (leftDiff <= rightDiff) {
+                    ans.push_back(arr[left]);
+                    left--;
+                }
+                else {
+                    ans.push_back(arr[right]);
+                    right++;
+                }
+            }
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
